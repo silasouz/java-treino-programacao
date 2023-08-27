@@ -1,6 +1,7 @@
 package br.com.bank.service;
 
 import br.com.bank.model.Banco;
+import br.com.bank.exceptions.BancoNaoCadastradoException;
 import br.com.bank.gateway.Bacen;
 
 
@@ -15,6 +16,10 @@ public class SistemaBancario {
 	}
 
 	public long registrarBanco(Banco banco) {
-		return bacen.cadastrarBanco(banco);
+		try {
+			return bacen.cadastrarBanco(banco);
+		} catch (Exception e) {
+			throw new BancoNaoCadastradoException(e.getMessage());
+		}
 	}
 }

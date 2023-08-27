@@ -3,7 +3,6 @@ package br.com.bank.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -11,6 +10,12 @@ public class Banco {
 
     private String nome;
 
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
     public Banco(String nome) {
         this.nome = nome;
     }
@@ -21,13 +26,9 @@ public class Banco {
         contas.add(conta);
     }
     public Conta pesquisarContaDoCliente(String cpf) {
-        Conta c = null;
-        for (int i = 0; i < contas.size(); i++) {
-            if (contas.get(i).getCpf().equals(cpf)) {
-                c = contas.get(i);
-            }
-        }
-        return c;
+        return contas.stream()
+            .filter(c -> c.getCpf().equals(cpf))
+            .findFirst().orElse(null);
     }
 
     public List<Conta> listarContasAltaRenda() {
